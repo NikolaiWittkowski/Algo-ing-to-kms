@@ -1,0 +1,82 @@
+package mergeSort;
+
+import java.util.Random;
+
+public class MergeSort {
+
+	public static void main(String[] args) {
+		
+		int[] arr = new int[new Random().nextInt(0,100)];
+		
+		for (int i = 0; i<arr.length;i++) {
+			arr[i] = new Random().nextInt(0, 4999);
+		}
+		
+		System.out.println("OG array");
+		printArray(arr);
+		mergeSort(arr);
+		System.out.println("neu array");
+		printArray(arr);
+		
+
+	}
+	
+	public static void mergeSort(int[] arr) {
+		
+		if (arr.length < 2) {
+			return;
+		}
+		
+		int m = arr.length/2;
+		
+		int[] links = new int[m];
+		int[] rechts = new int[arr.length - m];
+		
+		for (int i = 0; i < m; i++) {
+			links[i] = arr[i];
+		}
+		
+		for (int i = m; i < arr.length;i++) {
+			rechts[i-m] = arr[i];
+		}
+		
+		mergeSort(links);
+		mergeSort(rechts);
+		
+		merge(arr,links,rechts);
+		
+	}
+	
+	public static void merge(int[] arr, int[] links, int[] rechts) {
+		int l = 0;
+		int r = 0;
+		int og = 0;
+		
+		while (l < links.length && r < rechts.length) {
+			
+			if (links[l] >= rechts[r]) {
+				arr[og++] = links[l++];
+			} else {
+				arr[og++] = rechts[r++];
+			}
+			
+		}
+		
+		while (l < links.length) {
+			arr[og++] = links[l++];
+		}
+		
+		while (r < rechts.length) {
+			arr[og++] = rechts[r++];
+		}
+		
+	}
+	
+	public static void printArray(int[] arr) {
+		for (int i: arr) {
+			System.out.print(i + " ");
+		}
+		System.out.println();
+	}
+
+}
