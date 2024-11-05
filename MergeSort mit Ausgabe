@@ -1,0 +1,65 @@
+package aufgabe1;
+
+import java.util.Arrays;
+
+public class MainApp {
+
+	public static void main(String[] args) {
+		
+		int[] a = {99,0,33,27,87,80,65,77,39,88};
+		System.out.println("Zu sortierendes Array:" + Arrays.toString(Arrays.copyOfRange(a, 0, a.length)));
+		sortiere(a,0,a.length-1);
+		System.out.println("Sortiertes Array: ");
+		for (int i : a) {
+			System.out.print(i + " ");
+		}
+
+	}
+
+	private static void sortiere(int[] arr, int indexAnfang, int indexEnde) {
+		
+		if (indexAnfang < indexEnde) {
+			
+			int mitte = (indexAnfang + indexEnde) / 2;
+			
+			sortiere(arr,indexAnfang,mitte);
+			sortiere(arr,mitte+1,indexEnde);
+			
+			merge(arr,indexAnfang,mitte,indexEnde);
+			
+			
+		}
+		
+	}
+
+	private static void merge(int[] arr, int indexAnfang, int mitte, int indexEnde) {
+		System.out.println("Aufruf von sortiereMitMergeSort mit begin = " + indexAnfang + " und end = " + indexEnde + "; zu mergender Teil ist " + Arrays.toString(Arrays.copyOfRange(arr, indexAnfang, indexEnde+1)));
+		
+		int[] leftHalf = Arrays.copyOfRange(arr, indexAnfang, mitte+1);
+		int[] rightHalf = Arrays.copyOfRange(arr, mitte+1, indexEnde+1);
+		
+		int l = 0, r=0, og = indexAnfang;
+		
+		while (l < leftHalf.length && r < rightHalf.length) {
+			
+			if (leftHalf[l] >= rightHalf[r]) {
+				arr[og++] = leftHalf[l++];
+			} else {
+				arr[og++] = rightHalf[r++];
+			}
+			
+		}
+		
+		while(l<leftHalf.length) {
+			arr[og++] = leftHalf[l++];
+		}
+		
+		while(r<rightHalf.length) {
+			arr[og++] = rightHalf[r++];
+		}
+		
+		System.out.println("Gemergter Teil ist nun " + Arrays.toString(Arrays.copyOfRange(arr, indexAnfang, indexEnde+1)));
+		
+	}
+
+}
